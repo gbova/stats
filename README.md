@@ -25,8 +25,8 @@ DataCapture.add(int elem) -> no return value
 
 DataCapture.build_stats() -> Stats
   -  Returns a Stats object, built out of the existing data values in the DataCapture instance
-  -  O(n logn) because I used Python's sort algorithm, which is O(n logn), to sort the values (of which there will
-     be a max of n)
+  -  O(n) because I used Python dictionaries (hash maps) to sort and store 
+     frequencies and greater than/less than data
 
 Stats.less(int value) -> int
   -  Returns the number of elements that are less than the given value
