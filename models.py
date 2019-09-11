@@ -1,9 +1,12 @@
+from errors import NegativeInputException, MinLargerThanMaxException
+
+
 class DataCapture:
     data_values = []
 
     def add(self, elem):
         if elem < 0:
-            return  # TODO: Error
+            raise NegativeInputException
         self.data_values.append(elem)
 
     def build_stats(self):
@@ -64,7 +67,7 @@ class Stats:
 
     def between(self, lower_boundary, upper_boundary):
         if lower_boundary > upper_boundary:
-            return  # TODO: Error
+            raise MinLargerThanMaxException
         if lower_boundary == upper_boundary:
             return self.frequencies[lower_boundary]
         return self.total_elements - self.less(lower_boundary) - self.greater(upper_boundary)
