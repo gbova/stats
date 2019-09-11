@@ -4,7 +4,7 @@ stats
 
 ### Running the Program
 
-Clone the [statistics repo](https://github.com/gbova/statistics)
+Clone the [statistics repo](https://github.com/gbova/stats)
 
 Create a Python virtualenv
 

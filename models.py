@@ -13,31 +13,40 @@ class DataCapture:
         total_elements = len(self.data_values)
         min_element = min(self.data_values)
         max_element = max(self.data_values)
+        frequency_map = self.calculate_frequency_map()
+        values_less = self.create_values_less_dict(frequency_map, min_element, max_element)
+        values_greater = self.create_values_greater_dict(frequency_map, min_element, max_element)
 
-        frequencies = {}
+        return Stats(total_elements, min_element, max_element, frequency_map, values_less, values_greater)
+
+    def calculate_frequency_map(self):
+        frequency_map = {}
         for element in self.data_values:
-            if element in frequencies:
-                frequencies[element] += 1
+            if element in frequency_map:
+                frequency_map[element] += 1
             else:
-                frequencies[element] = 1
+                frequency_map[element] = 1
+        return frequency_map
 
-        #  Create a dictionary of value: num_elements_less_than_value
+    @staticmethod
+    def create_values_less_dict(frequency_map, min_element, max_element):
         values_less = {}
-        num_elements_less_than_current_num = frequencies[min_element]
+        num_elements_less_than_current_num = frequency_map[min_element]
         for current_num in range(min_element + 1, max_element + 1):
             values_less[current_num] = num_elements_less_than_current_num
-            if current_num in frequencies:
-                num_elements_less_than_current_num += frequencies[current_num]
+            if current_num in frequency_map:
+                num_elements_less_than_current_num += frequency_map[current_num]
+        return values_less
 
-        #  Create a dictionary of value: num_elements_greater_than_value
+    @staticmethod
+    def create_values_greater_dict(frequency_map, min_element, max_element):
         values_greater = {}
-        num_elements_greater_than_current_num = frequencies[max_element]
+        num_elements_greater_than_current_num = frequency_map[max_element]
         for current_num in range(max_element - 1, min_element - 1, -1):
             values_greater[current_num] = num_elements_greater_than_current_num
-            if current_num in frequencies:
-                num_elements_greater_than_current_num += frequencies[current_num]
-
-        return Stats(total_elements, min_element, max_element, frequencies, values_less, values_greater)
+            if current_num in frequency_map:
+                num_elements_greater_than_current_num += frequency_map[current_num]
+        return values_greater
 
 
 class Stats:
